@@ -15,6 +15,9 @@ Aswani is a React Native mobile application built with Expo that connects servic
 - Receive push notifications for new responses
 - Save favorite vendors for future requests
 - View complete request and conversation history
+- **Product availability alerts** - Get notified when specific products/services become available
+- Browse **featured products/services** from vendors
+- See relevant advertisements (can be disabled per user)
 
 ### For Vendors
 - Register and manage service/product categories (20+ categories)
@@ -34,6 +37,9 @@ Aswani is a React Native mobile application built with Expo that connects servic
 - Build reputation through ratings and reviews
 - Set service area radius
 - Business profile with description
+- **Create featured items** - Promote up to 3 products/services (limited duration)
+- **Service availability alerts** - Get notified when matching requests are posted
+- See relevant advertisements (can be disabled per user)
 
 ### Shared Features
 - User authentication (Email/Password with Firebase)
@@ -46,6 +52,29 @@ Aswani is a React Native mobile application built with Expo that connects servic
 - Settings and preferences management
 - Notifications center with read/unread tracking
 - 4-tab bottom navigation for quick access
+
+### Monetization & Marketing Features
+- **Advertisement System**:
+  - Manual ads from Firebase backend
+  - Banner ads on home screens
+  - Per-user ad control (enable/disable for individual users)
+  - Global ad toggle from dashboard
+  - Premium users see no ads
+  - Ad impression and click tracking
+
+- **Featured Items System**:
+  - Vendors can feature up to 3 items simultaneously
+  - Customizable duration (default 30 days)
+  - Featured items shown prominently in carousel
+  - Click and impression tracking
+  - Automatic expiration management
+
+- **Product/Service Alerts**:
+  - Users subscribe to specific categories or keywords
+  - Automatic notifications when matching items posted
+  - Location-based alerts (distance filtering)
+  - Active/inactive toggle
+  - Alert statistics tracking
 
 ## Tech Stack
 

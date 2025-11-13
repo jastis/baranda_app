@@ -33,6 +33,10 @@ import ServiceHistoryScreen from '../screens/ServiceHistoryScreen';
 import VendorCategoriesScreen from '../screens/VendorCategoriesScreen';
 import SearchRequestsScreen from '../screens/SearchRequestsScreen';
 
+// New Features
+import ProductAlertsScreen from '../screens/ProductAlertsScreen';
+import FeaturedItemsScreen from '../screens/FeaturedItemsScreen';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -180,6 +184,11 @@ const RequesterStack = () => {
         component={SettingsScreen}
         options={{ title: 'Settings' }}
       />
+      <Stack.Screen
+        name="ProductAlerts"
+        component={ProductAlertsScreen}
+        options={{ title: 'Product Alerts' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -222,6 +231,16 @@ const VendorStack = () => {
         name="Settings"
         component={SettingsScreen}
         options={{ title: 'Settings' }}
+      />
+      <Stack.Screen
+        name="FeaturedItems"
+        component={FeaturedItemsScreen}
+        options={{ title: 'Featured Items' }}
+      />
+      <Stack.Screen
+        name="ProductAlerts"
+        component={ProductAlertsScreen}
+        options={{ title: 'Product Alerts' }}
       />
     </Stack.Navigator>
   );

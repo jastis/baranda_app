@@ -197,14 +197,34 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
           <Text style={styles.sectionTitle}>Quick Access</Text>
 
           {user.userType === 'vendor' && (
-            <TouchableOpacity
-              style={styles.quickAccessButton}
-              onPress={() => navigation.navigate('VendorCategories')}
-            >
-              <Text style={styles.quickAccessText}>📋 Manage Categories</Text>
-              <Text style={styles.quickAccessArrow}>›</Text>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity
+                style={styles.quickAccessButton}
+                onPress={() => navigation.navigate('VendorCategories')}
+              >
+                <Text style={styles.quickAccessText}>📋 Manage Categories</Text>
+                <Text style={styles.quickAccessArrow}>›</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.quickAccessButton}
+                onPress={() => navigation.navigate('FeaturedItems')}
+              >
+                <Text style={styles.quickAccessText}>🌟 Featured Items</Text>
+                <Text style={styles.quickAccessArrow}>›</Text>
+              </TouchableOpacity>
+            </>
           )}
+
+          <TouchableOpacity
+            style={styles.quickAccessButton}
+            onPress={() => navigation.navigate('ProductAlerts')}
+          >
+            <Text style={styles.quickAccessText}>
+              🔔 {user.userType === 'requester' ? 'Product Alerts' : 'Service Alerts'}
+            </Text>
+            <Text style={styles.quickAccessArrow}>›</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.quickAccessButton}

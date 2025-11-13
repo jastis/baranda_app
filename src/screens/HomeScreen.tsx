@@ -12,6 +12,8 @@ import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestor
 import { db } from '../services/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { Request } from '../types';
+import FeaturedItemsCarousel from '../components/FeaturedItemsCarousel';
+import AdBanner from '../components/AdBanner';
 
 interface HomeScreenProps {
   navigation: any;
@@ -112,24 +114,34 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       </View>
 
       {requests.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No requests yet</Text>
-          <Text style={styles.emptySubtext}>
-            Create your first request to get started
-          </Text>
-          <TouchableOpacity
-            style={styles.createButton}
-            onPress={() => navigation.navigate('CreateRequest')}
-          >
-            <Text style={styles.createButtonText}>Create Request</Text>
-          </TouchableOpacity>
-        </View>
+        <>
+          <FeaturedItemsCarousel />
+          <AdBanner placement="home" />
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No requests yet</Text>
+            <Text style={styles.emptySubtext}>
+              Create your first request to get started
+            </Text>
+            <TouchableOpacity
+              style={styles.createButton}
+              onPress={() => navigation.navigate('CreateRequest')}
+            >
+              <Text style={styles.createButtonText}>Create Request</Text>
+            </TouchableOpacity>
+          </View>
+        </>
       ) : (
         <FlatList
           data={requests}
           renderItem={renderRequest}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
+          ListHeaderComponent={
+            <>
+              <FeaturedItemsCarousel />
+              <AdBanner placement="home" />
+            </>
+          }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

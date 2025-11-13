@@ -21,8 +21,12 @@ export interface User {
   businessName?: string;
   businessDescription?: string;
   serviceArea?: number; // radius in km
+  featuredItemsCount?: number; // number of featured items vendor has
   // Requester-specific fields
   favoriteVendors?: string[];
+  // Advertisement settings
+  adsDisabled?: boolean; // individual user ad disable
+  isPremium?: boolean; // premium users see no ads
 }
 
 export interface VendorCategory {
@@ -141,5 +145,71 @@ export interface Notification {
   body: string;
   data?: any;
   read: boolean;
+  createdAt: Date;
+}
+
+// Advertisement System
+export interface Advertisement {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  linkUrl?: string;
+  type: 'banner' | 'interstitial' | 'featured';
+  isActive: boolean;
+  targetUserType?: UserType | 'all';
+  impressions: number;
+  clicks: number;
+  createdAt: Date;
+  expiresAt?: Date;
+}
+
+export interface AdSettings {
+  id: string;
+  adsEnabled: boolean; // global ad toggle
+  admobEnabled: boolean; // use AdMob
+  manualAdsEnabled: boolean; // use manual ads from Firebase
+  admobBannerId?: string;
+  admobInterstitialId?: string;
+  showAdEveryNScreens: number; // show interstitial every N screens
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Product Availability Alerts
+export interface ProductAlert {
+  id: string;
+  userId: string;
+  userName: string;
+  categories: string[]; // categories to watch
+  keywords: string[]; // keywords to match
+  location?: {
+    latitude: number;
+    longitude: number;
+    maxDistance: number; // in km
+  };
+  isActive: boolean;
+  notificationCount: number;
+  createdAt: Date;
+  lastTriggered?: Date;
+}
+
+// Featured Products/Services
+export interface FeaturedItem {
+  id: string;
+  vendorId: string;
+  vendorName: string;
+  vendorRating: number;
+  title: string;
+  description: string;
+  category: string;
+  price?: number;
+  imageUrl?: string;
+  contactInfo?: string;
+  isActive: boolean;
+  impressions: number;
+  clicks: number;
+  startDate: Date;
+  endDate: Date;
   createdAt: Date;
 }

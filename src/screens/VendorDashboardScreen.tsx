@@ -20,6 +20,8 @@ import { db } from '../services/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { Request } from '../types';
 import { getCurrentLocation, calculateDistance } from '../utils/location';
+import FeaturedItemsCarousel from '../components/FeaturedItemsCarousel';
+import AdBanner from '../components/AdBanner';
 
 interface VendorDashboardScreenProps {
   navigation: any;
@@ -188,18 +190,28 @@ const VendorDashboardScreen: React.FC<VendorDashboardScreenProps> = ({ navigatio
       </View>
 
       {requests.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No requests available</Text>
-          <Text style={styles.emptySubtext}>
-            Check back later for new opportunities
-          </Text>
-        </View>
+        <>
+          <FeaturedItemsCarousel />
+          <AdBanner placement="vendor" />
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No requests available</Text>
+            <Text style={styles.emptySubtext}>
+              Check back later for new opportunities
+            </Text>
+          </View>
+        </>
       ) : (
         <FlatList
           data={requests}
           renderItem={renderRequest}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
+          ListHeaderComponent={
+            <>
+              <FeaturedItemsCarousel />
+              <AdBanner placement="vendor" />
+            </>
+          }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
