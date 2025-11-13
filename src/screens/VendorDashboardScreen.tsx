@@ -173,10 +173,18 @@ const VendorDashboardScreen: React.FC<VendorDashboardScreenProps> = ({ navigatio
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Available Requests</Text>
-        <Text style={styles.headerSubtitle}>
-          {requests.length} request{requests.length !== 1 ? 's' : ''} available
-        </Text>
+        <View style={styles.headerLeft}>
+          <Text style={styles.headerTitle}>Available Requests</Text>
+          <Text style={styles.headerSubtitle}>
+            {requests.length} request{requests.length !== 1 ? 's' : ''} available
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={() => navigation.navigate('SearchRequests')}
+        >
+          <Text style={styles.searchButtonText}>🔍 Search</Text>
+        </TouchableOpacity>
       </View>
 
       {requests.length === 0 ? (
@@ -212,10 +220,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 20,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb'
+  },
+  headerLeft: {
+    flex: 1
   },
   headerTitle: {
     fontSize: 24,
@@ -226,6 +240,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
     marginTop: 5
+  },
+  searchButton: {
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginLeft: 10
+  },
+  searchButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600'
   },
   listContainer: {
     padding: 15

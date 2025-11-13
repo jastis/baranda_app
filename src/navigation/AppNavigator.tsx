@@ -22,6 +22,16 @@ import RespondToRequestScreen from '../screens/RespondToRequestScreen';
 import ConversationsScreen from '../screens/ConversationsScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+
+// History Screens
+import RequestHistoryScreen from '../screens/RequestHistoryScreen';
+import ServiceHistoryScreen from '../screens/ServiceHistoryScreen';
+
+// Vendor Management
+import VendorCategoriesScreen from '../screens/VendorCategoriesScreen';
+import SearchRequestsScreen from '../screens/SearchRequestsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,7 +50,7 @@ const RequesterTabs = () => {
         name="HomeTab"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Requests',
+          tabBarLabel: 'Home',
           headerShown: true,
           headerTitle: 'My Requests'
         }}
@@ -52,6 +62,15 @@ const RequesterTabs = () => {
           tabBarLabel: 'Messages',
           headerShown: true,
           headerTitle: 'Messages'
+        }}
+      />
+      <Tab.Screen
+        name="NotificationsTab"
+        component={NotificationsScreen}
+        options={{
+          tabBarLabel: 'Alerts',
+          headerShown: true,
+          headerTitle: 'Notifications'
         }}
       />
       <Tab.Screen
@@ -81,7 +100,7 @@ const VendorTabs = () => {
         name="DashboardTab"
         component={VendorDashboardScreen}
         options={{
-          tabBarLabel: 'Requests',
+          tabBarLabel: 'Browse',
           headerShown: true,
           headerTitle: 'Available Requests'
         }}
@@ -93,6 +112,15 @@ const VendorTabs = () => {
           tabBarLabel: 'Messages',
           headerShown: true,
           headerTitle: 'Messages'
+        }}
+      />
+      <Tab.Screen
+        name="NotificationsTab"
+        component={NotificationsScreen}
+        options={{
+          tabBarLabel: 'Alerts',
+          headerShown: true,
+          headerTitle: 'Notifications'
         }}
       />
       <Tab.Screen
@@ -138,9 +166,19 @@ const RequesterStack = () => {
         options={{ title: 'Request Details' }}
       />
       <Stack.Screen
+        name="RequestHistory"
+        component={RequestHistoryScreen}
+        options={{ title: 'Request History' }}
+      />
+      <Stack.Screen
         name="Chat"
         component={ChatScreen}
         options={{ title: 'Chat' }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
       />
     </Stack.Navigator>
   );
@@ -161,9 +199,29 @@ const VendorStack = () => {
         options={{ title: 'Respond to Request' }}
       />
       <Stack.Screen
+        name="VendorCategories"
+        component={VendorCategoriesScreen}
+        options={{ title: 'Vendor Categories' }}
+      />
+      <Stack.Screen
+        name="SearchRequests"
+        component={SearchRequestsScreen}
+        options={{ title: 'Search Requests' }}
+      />
+      <Stack.Screen
+        name="ServiceHistory"
+        component={ServiceHistoryScreen}
+        options={{ title: 'Service History' }}
+      />
+      <Stack.Screen
         name="Chat"
         component={ChatScreen}
         options={{ title: 'Chat' }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
       />
     </Stack.Navigator>
   );

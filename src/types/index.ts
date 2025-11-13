@@ -16,7 +16,44 @@ export interface User {
   };
   createdAt: Date;
   isOnline?: boolean;
+  // Vendor-specific fields
+  vendorCategories?: string[];
+  businessName?: string;
+  businessDescription?: string;
+  serviceArea?: number; // radius in km
+  // Requester-specific fields
+  favoriteVendors?: string[];
 }
+
+export interface VendorCategory {
+  id: string;
+  name: string;
+  description: string;
+  icon?: string;
+}
+
+export const VENDOR_CATEGORIES = [
+  'Electronics & Gadgets',
+  'Home Services & Repairs',
+  'Food & Catering',
+  'Transportation & Delivery',
+  'Health & Wellness',
+  'Beauty & Personal Care',
+  'Education & Tutoring',
+  'Professional Services',
+  'Event Planning',
+  'Cleaning Services',
+  'IT & Tech Support',
+  'Photography & Video',
+  'Construction & Renovation',
+  'Legal Services',
+  'Financial Services',
+  'Pet Services',
+  'Automotive Services',
+  'Real Estate',
+  'Marketing & Advertising',
+  'Other'
+];
 
 export interface Request {
   id: string;

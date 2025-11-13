@@ -193,6 +193,42 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
           </View>
         </View>
 
+        <View style={styles.quickAccessSection}>
+          <Text style={styles.sectionTitle}>Quick Access</Text>
+
+          {user.userType === 'vendor' && (
+            <TouchableOpacity
+              style={styles.quickAccessButton}
+              onPress={() => navigation.navigate('VendorCategories')}
+            >
+              <Text style={styles.quickAccessText}>📋 Manage Categories</Text>
+              <Text style={styles.quickAccessArrow}>›</Text>
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity
+            style={styles.quickAccessButton}
+            onPress={() =>
+              navigation.navigate(
+                user.userType === 'requester' ? 'RequestHistory' : 'ServiceHistory'
+              )
+            }
+          >
+            <Text style={styles.quickAccessText}>
+              📊 {user.userType === 'requester' ? 'Request History' : 'Service History'}
+            </Text>
+            <Text style={styles.quickAccessArrow}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.quickAccessButton}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <Text style={styles.quickAccessText}>⚙️ Settings</Text>
+            <Text style={styles.quickAccessArrow}>›</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.dangerZone}>
           <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
             <Text style={styles.signOutButtonText}>Sign Out</Text>
@@ -364,6 +400,29 @@ const styles = StyleSheet.create({
   statLabel: {
     fontSize: 14,
     color: '#6b7280'
+  },
+  quickAccessSection: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    marginTop: 20
+  },
+  quickAccessButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f3f4f6'
+  },
+  quickAccessText: {
+    fontSize: 16,
+    color: '#1f2937',
+    fontWeight: '500'
+  },
+  quickAccessArrow: {
+    fontSize: 24,
+    color: '#d1d5db'
   },
   dangerZone: {
     marginTop: 20

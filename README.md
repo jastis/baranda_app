@@ -5,27 +5,47 @@ Aswani is a React Native mobile application built with Expo that connects servic
 ## Features
 
 ### For Requesters
-- Create service/item requests with location
-- View and compare vendor responses
+- Create service/item requests with automatic location detection
+- Browse request history with status filters (open, active, completed)
+- View and compare vendor responses sorted by rating
 - Accept vendor responses and start conversations
 - Real-time chat with chosen vendors
 - Rate and review vendors
-- Track request status
+- Track request status with detailed views
+- Receive push notifications for new responses
+- Save favorite vendors for future requests
+- View complete request and conversation history
 
 ### For Vendors
-- Browse available service requests
-- View requests sorted by distance
-- Submit detailed responses with pricing and features
-- Real-time chat with requesters
-- Build reputation through ratings
+- Register and manage service/product categories (20+ categories)
+- Browse available requests sorted by distance
+- Advanced search and filter system:
+  - Filter by category
+  - Filter by distance radius
+  - Filter by budget range
+  - Search by keywords
+- Submit detailed responses with:
+  - Pricing
+  - Features list
+  - Delivery options
+  - Estimated delivery time
+- View service history with status tracking
+- Real-time chat with requesters after acceptance
+- Build reputation through ratings and reviews
+- Set service area radius
+- Business profile with description
 
 ### Shared Features
-- User authentication (Email/Password)
-- Real-time messaging
-- Location-based services
-- Push notifications
-- Profile management
+- User authentication (Email/Password with Firebase)
+- Dual user types (Requester/Vendor) with role-based interfaces
+- Real-time messaging with read receipts
+- Location-based matching and distance calculation
+- Push notifications for important updates
+- Comprehensive profile management
 - Rating and review system
+- Settings and preferences management
+- Notifications center with read/unread tracking
+- 4-tab bottom navigation for quick access
 
 ## Tech Stack
 
@@ -130,24 +150,36 @@ baranda_app/
 │   ├── components/          # Reusable components
 │   ├── contexts/            # React contexts (Auth)
 │   ├── navigation/          # Navigation configuration
-│   ├── screens/            # Screen components
-│   │   ├── LoginScreen.tsx
-│   │   ├── SignupScreen.tsx
-│   │   ├── HomeScreen.tsx
-│   │   ├── CreateRequestScreen.tsx
-│   │   ├── RequestDetailsScreen.tsx
-│   │   ├── VendorDashboardScreen.tsx
-│   │   ├── RespondToRequestScreen.tsx
-│   │   ├── ConversationsScreen.tsx
-│   │   ├── ChatScreen.tsx
-│   │   └── ProfileScreen.tsx
+│   ├── screens/            # Screen components (15 total)
+│   │   ├── Auth/
+│   │   │   ├── LoginScreen.tsx
+│   │   │   └── SignupScreen.tsx
+│   │   ├── Requester/
+│   │   │   ├── HomeScreen.tsx
+│   │   │   ├── CreateRequestScreen.tsx
+│   │   │   ├── RequestDetailsScreen.tsx
+│   │   │   └── RequestHistoryScreen.tsx
+│   │   ├── Vendor/
+│   │   │   ├── VendorDashboardScreen.tsx
+│   │   │   ├── RespondToRequestScreen.tsx
+│   │   │   ├── VendorCategoriesScreen.tsx
+│   │   │   ├── SearchRequestsScreen.tsx
+│   │   │   └── ServiceHistoryScreen.tsx
+│   │   └── Shared/
+│   │       ├── ConversationsScreen.tsx
+│   │       ├── ChatScreen.tsx
+│   │       ├── ProfileScreen.tsx
+│   │       ├── NotificationsScreen.tsx
+│   │       └── SettingsScreen.tsx
 │   ├── services/           # External services (Firebase)
 │   ├── types/              # TypeScript type definitions
-│   └── utils/              # Utility functions
+│   └── utils/              # Utility functions (location, etc.)
 ├── assets/                 # Images, fonts, etc.
 ├── App.tsx                 # Root component
 ├── app.json               # Expo configuration
-└── package.json           # Dependencies
+├── package.json           # Dependencies
+├── README.md              # This file
+└── FIREBASE_SETUP.md      # Firebase setup guide
 
 ```
 
@@ -369,14 +401,25 @@ For support, please open an issue in the GitHub repository or contact the develo
 
 ## Roadmap
 
+### Completed Features ✅
+- [x] Advanced search and filter system
+- [x] Push notifications structure
+- [x] Vendor category management
+- [x] Request and service history tracking
+- [x] Settings and preferences
+- [x] Notifications center
+
+### Planned Features
 - [ ] Image upload for requests and responses
 - [ ] Voice/Video calling integration
-- [ ] Payment gateway integration
-- [ ] Advanced search and filters
-- [ ] Push notifications
-- [ ] In-app reviews system
-- [ ] Analytics dashboard
+- [ ] Payment gateway integration (Stripe/PayPal)
+- [ ] In-app reviews with photos
+- [ ] Analytics dashboard for vendors
 - [ ] Multi-language support
+- [ ] Favorites/saved vendors
+- [ ] Advanced vendor search with filters
+- [ ] Email notifications
+- [ ] SMS notifications for critical updates
 
 ## Acknowledgments
 
