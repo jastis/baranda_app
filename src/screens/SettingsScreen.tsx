@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme, ThemeMode } from '../contexts/ThemeContext';
 
 interface SettingsScreenProps {
   navigation: any;
@@ -16,6 +17,7 @@ interface SettingsScreenProps {
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
   const { user, signOut } = useAuth();
+  const { theme, themeMode, setThemeMode } = useTheme();
   const [pushNotifications, setPushNotifications] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [locationServices, setLocationServices] = useState(true);
@@ -60,33 +62,79 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
       disabled={!onPress && !showSwitch}
     >
       <View style={styles.settingContent}>
-        <Text style={styles.settingTitle}>{title}</Text>
-        {subtitle && <Text style={styles.settingSubtitle}>{subtitle}</Text>}
+        <Text style={[styles.settingTitle, { color: theme.colors.text }]}>{title}</Text>
+        {subtitle && <Text style={[styles.settingSubtitle, { color: theme.colors.textSecondary }]}>{subtitle}</Text>}
       </View>
       {showSwitch && onSwitchChange && (
         <Switch
           value={switchValue}
           onValueChange={onSwitchChange}
-          trackColor={{ false: '#d1d5db', true: '#93c5fd' }}
-          thumbColor={switchValue ? '#2563eb' : '#f3f4f6'}
+          trackColor={{ false: theme.colors.border, true: '#93c5fd' }}
+          thumbColor={switchValue ? theme.colors.primary : theme.colors.disabled}
         />
       )}
       {showArrow && !showSwitch && (
-        <Text style={styles.arrow}>›</Text>
+        <Text style={[styles.arrow, { color: theme.colors.border }]}>›</Text>
       )}
     </TouchableOpacity>
   );
 
   const SectionHeader = ({ title }: { title: string }) => (
-    <Text style={styles.sectionHeader}>{title}</Text>
+    <Text style={[styles.sectionHeader, { color: theme.colors.textSecondary }]}>{title}</Text>
   );
 
+  const getThemeModeLabel = (mode: ThemeMode) => {
+    switch (mode) {
+      case 'light':
+        return 'Light';
+      case 'dark':
+        return 'Dark';
+      case 'auto':
+        return 'Auto (System)';
+    }
+  };
+
+  const handleThemePress = () => {
+    Alert.alert(
+      'Choose Theme',
+      'Select your preferred theme',
+      [
+        {
+          text: 'Light',
+          onPress: () => setThemeMode('light'),
+        },
+        {
+          text: 'Dark',
+          onPress: () => setThemeMode('dark'),
+        },
+        {
+          text: 'Auto (System)',
+          onPress: () => setThemeMode('auto'),
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ]
+    );
+  };
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.content}>
+        {/* Appearance Section */}
+        <SectionHeader title="Appearance" />
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
+          <SettingRow
+            title="Theme"
+            subtitle={getThemeModeLabel(themeMode)}
+            onPress={handleThemePress}
+          />
+        </View>
+
         {/* Account Section */}
         <SectionHeader title="Account" />
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
           <SettingRow
             title="Edit Profile"
             subtitle="Update your personal information"
@@ -103,7 +151,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
         {/* Notifications Section */}
         <SectionHeader title="Notifications" />
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
           <SettingRow
             title="Push Notifications"
             subtitle="Receive push notifications"
@@ -124,7 +172,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
         {/* Privacy Section */}
         <SectionHeader title="Privacy & Security" />
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
           <SettingRow
             title="Location Services"
             subtitle="Allow app to access your location"
@@ -142,7 +190,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
         {/* History Section */}
         <SectionHeader title="History" />
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
           {user?.userType === 'requester' ? (
             <SettingRow
               title="Request History"
@@ -160,7 +208,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
         {/* Help & Support Section */}
         <SectionHeader title="Help & Support" />
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
           <SettingRow
             title="Help Center"
             subtitle="Get help and support"
@@ -182,15 +230,15 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
         </View>
 
         {/* Account Actions */}
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: theme.colors.surface }]}>
           <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
             <Text style={styles.signOutButtonText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Aswani © 2024</Text>
-          <Text style={styles.footerSubtext}>Made with care for connecting people</Text>
+          <Text style={[styles.footerText, { color: theme.colors.textSecondary }]}>Aswani © 2024</Text>
+          <Text style={[styles.footerSubtext, { color: theme.colors.placeholder }]}>Made with care for connecting people</Text>
         </View>
       </View>
     </ScrollView>
@@ -230,7 +278,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 15,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: '#f3f4f6'
   },
   settingContent: {
