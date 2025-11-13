@@ -1,6 +1,10 @@
-# Aswani - Service Request & Vendor Matching App
+# Aswani - Service Request & Vendor Marketplace
 
-Aswani is a React Native mobile application built with Expo that connects service requesters with vendors. Users can request items or services, and vendors can respond with their offerings. The app includes real-time chat, location-based matching, and rating systems.
+A comprehensive React Native mobile application built with Expo that connects service requesters with vendors. A full-featured marketplace platform for service discovery, quotations, secure payments, and communication.
+
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red.svg)
 
 ## Features
 
@@ -40,6 +44,36 @@ Aswani is a React Native mobile application built with Expo that connects servic
 - **Create featured items** - Promote up to 3 products/services (limited duration)
 - **Service availability alerts** - Get notified when matching requests are posted
 - See relevant advertisements (can be disabled per user)
+- **Secure Payments**: Pay vendors via Paystack with escrow protection
+- **Enhanced Reviews**: Leave detailed reviews with photos
+- **Favorites**: Save trusted vendors for quick access
+- **Wallet Management**: Track earnings and withdraw funds
+- **Dark Mode**: Choose between Light, Dark, or Auto themes
+
+### For Vendors (Continued)
+- **Payment System**:
+  - Receive payments securely via escrow
+  - Wallet system for managing earnings
+  - Withdraw funds to bank account
+  - View transaction history
+- **Trust & Safety**:
+  - Multi-level verification (Phone, Email, ID, Business)
+  - Verification score (0-100)
+  - Display verification badges on profile
+- **Portfolio Management**:
+  - Showcase past work with photo galleries
+  - Feature best projects
+  - Organize by categories and tags
+- **Analytics Dashboard**:
+  - Track quotes submitted and conversion rate
+  - Monitor revenue and earnings trends
+  - View rating breakdowns and reviews
+  - Analyze response times
+  - Identify top performing categories
+- **Subscription System**:
+  - Choose from multiple subscription tiers
+  - Access premium features
+  - Enhanced visibility in search results
 
 ### Shared Features
 - User authentication (Email/Password with Firebase)
@@ -52,6 +86,36 @@ Aswani is a React Native mobile application built with Expo that connects servic
 - Settings and preferences management
 - Notifications center with read/unread tracking
 - 4-tab bottom navigation for quick access
+- **Dark Mode**: Light, Dark, and Auto (system) theme options
+- **Referral Program**: Earn rewards for inviting friends (₦500 per successful referral)
+- **Share Functionality**: Share requests and vendor profiles via WhatsApp, SMS, etc.
+- **Trust & Safety**:
+  - Report and block users
+  - Evidence upload for reports
+  - Multi-level verification system
+- **Enhanced Reviews**:
+  - 5-star rating system
+  - Photo uploads in reviews
+  - Vendor responses to reviews
+  - Helpful voting on reviews
+  - Verified purchase badges
+
+### For Admins
+- **User Management**:
+  - View and manage all users
+  - Handle verification requests
+  - Review user reports
+  - Suspend or activate accounts
+- **Content Management**:
+  - Create and manage advertisements
+  - Set up subscription plans
+  - Configure featured items
+  - Moderate reviews and content
+- **Platform Analytics**:
+  - Track platform-wide metrics
+  - Monitor revenue and transactions
+  - View user growth trends
+  - Export reports
 
 ### Monetization & Marketing Features
 - **Advertisement System**:
@@ -78,15 +142,31 @@ Aswani is a React Native mobile application built with Expo that connects servic
 
 ## Tech Stack
 
-- **Frontend**: React Native with Expo
-- **Backend**: Firebase
-  - Firestore (Database)
-  - Firebase Authentication
-  - Firebase Storage
-- **Navigation**: React Navigation v6
-- **Location Services**: Expo Location
-- **Maps**: React Native Maps
+### Frontend
+- **Framework**: React Native with Expo SDK 49+
 - **Language**: TypeScript
+- **Navigation**: React Navigation v6 (Stack & Tab)
+- **State Management**: React Context API
+- **UI Components**: React Native Paper + Custom Components
+- **Styling**: StyleSheet with theme support (Dark Mode)
+- **Forms**: React Hook Form
+- **Location**: Expo Location
+- **Image Handling**: Expo Image Picker + Firebase Storage
+
+### Backend Services
+- **Authentication**: Firebase Authentication (Email/Password)
+- **Database**: Firebase Firestore (Real-time NoSQL)
+- **Storage**: Firebase Storage (Images & Documents)
+- **Push Notifications**: Firebase Cloud Messaging
+- **Cloud Functions**: Firebase Functions (Serverless)
+- **Analytics**: Firebase Analytics
+- **Performance**: Firebase Performance Monitoring
+
+### Third-Party Integrations
+- **Payments**: Paystack (Nigerian payment gateway)
+- **Notifications**: Expo Notifications + FCM
+- **Image Processing**: Expo Image Manipulator
+- **Maps**: React Native Maps (planned)
 
 ## Prerequisites
 
@@ -112,26 +192,55 @@ Before you begin, ensure you have the following installed:
 
 3. **Set up Firebase**
 
-   Follow the detailed Firebase setup guide in `FIREBASE_SETUP.md` to:
-   - Create a Firebase project
-   - Enable Authentication
-   - Set up Firestore Database
-   - Configure Firebase Storage
-   - Get your Firebase configuration credentials
+   Follow the comprehensive Firebase setup guide: **[docs/FIREBASE_SETUP.md](./docs/FIREBASE_SETUP.md)**
 
-4. **Configure Firebase credentials**
+   This includes:
+   - Creating a Firebase project
+   - Enabling Email/Password Authentication
+   - Setting up Firestore Database with security rules
+   - Configuring Firebase Storage with upload rules
+   - Enabling Cloud Messaging for push notifications
+   - Creating composite indexes
+   - Setting up Cloud Functions
+   - iOS and Android configuration
 
-   Open `src/services/firebase.ts` and replace the placeholder values with your Firebase project credentials:
+4. **Configure environment variables**
 
-   ```typescript
-   const firebaseConfig = {
-     apiKey: "YOUR_API_KEY",
-     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-     projectId: "YOUR_PROJECT_ID",
-     storageBucket: "YOUR_PROJECT_ID.appspot.com",
-     messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-     appId: "YOUR_APP_ID"
-   };
+   Create a `.env` file in the project root:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Update `.env` with your credentials:
+
+   ```bash
+   # Firebase Configuration
+   FIREBASE_API_KEY=your_api_key_here
+   FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+   FIREBASE_PROJECT_ID=your-project-id
+   FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+   FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   FIREBASE_APP_ID=your_app_id
+   FCM_SERVER_KEY=your_fcm_server_key
+
+   # Paystack Configuration
+   PAYSTACK_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxx
+   PAYSTACK_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxx
+
+   # App Configuration
+   PLATFORM_FEE_RATE=0.05
+   REFERRAL_REWARD=500
+   ```
+
+5. **Place Firebase configuration files**
+
+   ```bash
+   # iOS configuration
+   cp GoogleService-Info.plist ./
+
+   # Android configuration
+   cp google-services.json ./
    ```
 
 ## Running the App
@@ -174,49 +283,84 @@ npm run web
 ## Project Structure
 
 ```
-baranda_app/
+aswani-app/
 ├── src/
-│   ├── components/          # Reusable components
-│   ├── contexts/            # React contexts (Auth)
-│   ├── navigation/          # Navigation configuration
-│   ├── screens/            # Screen components (15 total)
-│   │   ├── Auth/
+│   ├── components/          # Reusable UI components
+│   ├── contexts/           # React Context providers
+│   │   ├── AuthContext.tsx      # Authentication state
+│   │   └── ThemeContext.tsx     # Dark mode theme management
+│   ├── navigation/         # Navigation configuration
+│   │   └── AppNavigator.tsx     # Main app navigator
+│   ├── screens/           # All app screens (40+ screens)
+│   │   ├── Auth/              # Login, Signup
 │   │   │   ├── LoginScreen.tsx
-│   │   │   └── SignupScreen.tsx
-│   │   ├── Requester/
+│   │   │   ├── SignupScreen.tsx
+│   │   │   └── OnboardingScreen.tsx
+│   │   ├── Requester/         # Requester-specific screens
 │   │   │   ├── HomeScreen.tsx
 │   │   │   ├── CreateRequestScreen.tsx
 │   │   │   ├── RequestDetailsScreen.tsx
-│   │   │   └── RequestHistoryScreen.tsx
-│   │   ├── Vendor/
+│   │   │   ├── RequestHistoryScreen.tsx
+│   │   │   ├── PaymentScreen.tsx
+│   │   │   └── FavoritesScreen.tsx
+│   │   ├── Vendor/            # Vendor-specific screens
 │   │   │   ├── VendorDashboardScreen.tsx
 │   │   │   ├── RespondToRequestScreen.tsx
 │   │   │   ├── VendorCategoriesScreen.tsx
 │   │   │   ├── SearchRequestsScreen.tsx
-│   │   │   └── ServiceHistoryScreen.tsx
-│   │   └── Shared/
+│   │   │   ├── ServiceHistoryScreen.tsx
+│   │   │   ├── PortfolioScreen.tsx
+│   │   │   ├── VendorAnalyticsScreen.tsx
+│   │   │   ├── WalletScreen.tsx
+│   │   │   └── VendorSubscriptionScreen.tsx
+│   │   ├── Admin/             # Admin screens
+│   │   │   ├── AdminDashboardScreen.tsx
+│   │   │   ├── ManageAdvertisementsScreen.tsx
+│   │   │   └── ManageSubscriptionPlansScreen.tsx
+│   │   └── Shared/            # Shared screens
 │   │       ├── ConversationsScreen.tsx
 │   │       ├── ChatScreen.tsx
 │   │       ├── ProfileScreen.tsx
 │   │       ├── NotificationsScreen.tsx
-│   │       └── SettingsScreen.tsx
-│   ├── services/           # External services (Firebase)
-│   ├── types/              # TypeScript type definitions
-│   └── utils/              # Utility functions (location, etc.)
-├── assets/                 # Images, fonts, etc.
-├── App.tsx                 # Root component
-├── app.json               # Expo configuration
-├── package.json           # Dependencies
-├── README.md              # This file
-└── FIREBASE_SETUP.md      # Firebase setup guide
-
+│   │       ├── SettingsScreen.tsx
+│   │       ├── VerificationScreen.tsx
+│   │       ├── ReportUserScreen.tsx
+│   │       ├── ReferralScreen.tsx
+│   │       ├── EnhancedReviewsScreen.tsx
+│   │       ├── ProductAlertsScreen.tsx
+│   │       ├── FeaturedItemsScreen.tsx
+│   │       ├── TermsScreen.tsx
+│   │       └── PrivacyPolicyScreen.tsx
+│   ├── services/          # External services
+│   │   ├── firebase.ts        # Firebase initialization
+│   │   ├── notifications.ts    # Push notification service
+│   │   ├── paystack.ts        # Payment & escrow service
+│   │   └── imageUpload.ts     # Image upload utilities
+│   ├── types/             # TypeScript type definitions
+│   │   └── index.ts           # All app types (100+ interfaces)
+│   ├── utils/             # Utility functions
+│   │   ├── location.ts        # Location services
+│   │   └── shareUtils.ts      # Social sharing
+│   └── config/            # Configuration files
+│       └── firebase.ts        # Firebase config
+├── assets/                # Images, fonts, icons
+├── docs/                  # Comprehensive documentation
+│   ├── FIREBASE_SETUP.md      # Firebase setup guide
+│   ├── DARK_MODE.md          # Theme documentation
+│   └── PROJECT_SETUP.md      # Complete setup guide
+├── App.tsx               # Root component
+├── app.json              # Expo configuration
+├── package.json          # Dependencies (50+ packages)
+├── tsconfig.json         # TypeScript configuration
+├── .env                  # Environment variables (create this)
+└── README.md             # This file
 ```
 
-## Firestore Database Structure
+## Database Schema
 
-### Collections
+### Core Collections
 
-**users**
+#### users
 ```
 {
   id: string
@@ -233,7 +377,7 @@ baranda_app/
 }
 ```
 
-**requests**
+#### requests
 ```
 {
   id: string
@@ -250,7 +394,7 @@ baranda_app/
 }
 ```
 
-**responses**
+#### responses
 ```
 {
   id: string
@@ -269,7 +413,7 @@ baranda_app/
 }
 ```
 
-**conversations**
+#### conversations
 ```
 {
   id: string
@@ -282,7 +426,7 @@ baranda_app/
 }
 ```
 
-**messages**
+#### messages
 ```
 {
   id: string
@@ -294,6 +438,149 @@ baranda_app/
   timestamp: timestamp
   read: boolean
 }
+```
+
+### Additional Collections
+
+#### escrowTransactions
+```
+{
+  id: string
+  requestId: string
+  requesterId: string
+  vendorId: string
+  amount: number
+  platformFee: number
+  vendorAmount: number
+  status: 'pending' | 'held' | 'released' | 'refunded' | 'disputed'
+  paymentMethod: 'paystack' | 'wallet'
+  paystackReference?: string
+  createdAt: timestamp
+  releasedAt?: timestamp
+}
+```
+
+#### wallets
+```
+{
+  id: string
+  userId: string
+  balance: number
+  totalEarnings: number
+  pendingBalance: number
+  lastUpdated: timestamp
+}
+```
+
+#### userVerifications
+```
+{
+  id: string
+  userId: string
+  phoneVerified: boolean
+  emailVerified: boolean
+  idVerified: boolean
+  businessVerified: boolean
+  verificationScore: number // 0-100
+  idType?: string
+  idNumber?: string
+  idDocumentUrl?: string
+}
+```
+
+#### enhancedReviews
+```
+{
+  id: string
+  reviewerId: string
+  revieweeId: string
+  requestId: string
+  rating: number
+  comment: string
+  photos?: string[]
+  verifiedPurchase: boolean
+  helpful: number
+  vendorResponse?: { text: string, respondedAt: timestamp }
+  status: 'published' | 'hidden'
+  createdAt: timestamp
+}
+```
+
+#### portfolioItems
+```
+{
+  id: string
+  vendorId: string
+  title: string
+  description: string
+  category: string
+  images: string[]
+  completionDate: timestamp
+  price?: number
+  tags: string[]
+  featured: boolean
+  clicks: number
+  createdAt: timestamp
+}
+```
+
+For complete schema with all 25+ collections, see `src/types/index.ts`
+
+## API Integration
+
+### Paystack Payment Flow
+
+```typescript
+// 1. Initialize Payment
+const reference = await initializePaystackPayment(
+  amount,
+  email,
+  metadata
+);
+
+// 2. Verify Payment
+const paymentData = await verifyPaystackPayment(reference);
+
+// 3. Create Escrow
+const escrowId = await createEscrowTransaction(
+  requestId,
+  requesterId,
+  vendorId,
+  amount,
+  reference
+);
+
+// 4. Release Funds (after service completion)
+await releaseEscrowFunds(escrowId);
+```
+
+### Push Notifications
+
+```typescript
+// Request permission
+const enabled = await requestNotificationPermission();
+
+// Get FCM token
+const token = await messaging().getToken();
+
+// Save token
+await saveUserFCMToken(userId, token);
+
+// Send notification
+await sendPushNotification(userId, title, body, data);
+```
+
+### Image Upload
+
+```typescript
+// Upload single image
+const result = await uploadImage(uri, folder, userId);
+
+// Upload multiple images
+const results = await uploadMultipleImages(uris, folder, userId);
+
+// Result includes URL and metadata
+console.log(result.url, result.metadata);
 ```
 
 ## Firestore Security Rules
@@ -438,17 +725,30 @@ For support, please open an issue in the GitHub repository or contact the develo
 - [x] Settings and preferences
 - [x] Notifications center
 
+### Recently Added Features ✅
+- [x] Payment gateway integration with Paystack and Escrow system
+- [x] Trust & Safety system with multi-level verification
+- [x] Push notifications with Firebase Cloud Messaging
+- [x] Enhanced reviews with photos and vendor responses
+- [x] Vendor portfolio management with image galleries
+- [x] Vendor analytics dashboard with business insights
+- [x] Referral and rewards program for viral growth
+- [x] Dark mode support (Light, Dark, Auto)
+- [x] Favorites system for saving trusted vendors
+- [x] Share functionality for requests and profiles
+- [x] Admin controls for platform management
+- [x] Subscription system for vendors
+- [x] Terms of Service and Privacy Policy screens
+
 ### Planned Features
-- [ ] Image upload for requests and responses
 - [ ] Voice/Video calling integration
-- [ ] Payment gateway integration (Stripe/PayPal)
-- [ ] In-app reviews with photos
-- [ ] Analytics dashboard for vendors
-- [ ] Multi-language support
-- [ ] Favorites/saved vendors
-- [ ] Advanced vendor search with filters
-- [ ] Email notifications
+- [ ] Multi-language support (English, Yoruba, Hausa, Igbo)
+- [ ] In-app map integration
+- [ ] Advanced search with AI-powered matching
 - [ ] SMS notifications for critical updates
+- [ ] Scheduled and recurring services
+- [ ] Background checks for vendors
+- [ ] Dispute resolution system
 
 ## Acknowledgments
 
