@@ -33,6 +33,28 @@ export interface User {
   subscriptionStartDate?: Date;
   subscriptionEndDate?: Date;
   subscriptionAutoRenew?: boolean;
+  // Verification fields
+  verificationId?: string;
+  verificationScore?: number;
+  phoneVerified?: boolean;
+  emailVerified?: boolean;
+  idVerified?: boolean;
+  businessVerified?: boolean;
+  // Wallet
+  walletId?: string;
+  walletBalance?: number;
+  // Referral
+  referralCode?: string;
+  referredBy?: string;
+  // Performance (vendors)
+  responseTime?: number; // average in minutes
+  responseRate?: number; // percentage
+  acceptanceRate?: number;
+  completionRate?: number;
+  // Status
+  isBlocked?: boolean;
+  blockedReason?: string;
+  blockedAt?: Date;
 }
 
 export interface VendorCategory {
@@ -282,4 +304,284 @@ export interface AdminSettings {
   notificationsEnabled: boolean;
   updatedAt: Date;
   updatedBy: string;
+}
+
+// Payment & Escrow System
+export interface EscrowTransaction {
+  id: string;
+  requestId: string;
+  requesterId: string;
+  requesterName: string;
+  vendorId: string;
+  vendorName: string;
+  amount: number;
+  currency: string;
+  platformFee: number;
+  vendorAmount: number; // amount - platformFee
+  status: 'pending' | 'held' | 'released' | 'refunded' | 'disputed';
+  paymentMethod: 'paystack' | 'flutterwave' | 'wallet';
+  paystackReference?: string;
+  createdAt: Date;
+  paidAt?: Date;
+  releasedAt?: Date;
+  refundedAt?: Date;
+  milestones?: EscrowMilestone[];
+  disputeId?: string;
+}
+
+export interface EscrowMilestone {
+  id: string;
+  description: string;
+  amount: number;
+  status: 'pending' | 'completed' | 'approved';
+  completedAt?: Date;
+  approvedAt?: Date;
+}
+
+export interface Wallet {
+  id: string;
+  userId: string;
+  balance: number;
+  currency: string;
+  totalEarnings?: number; // for vendors
+  totalSpent?: number; // for requesters
+  pendingBalance?: number; // funds in escrow
+  updatedAt: Date;
+}
+
+export interface WalletTransaction {
+  id: string;
+  walletId: string;
+  userId: string;
+  type: 'credit' | 'debit';
+  amount: number;
+  currency: string;
+  category: 'deposit' | 'withdrawal' | 'payment' | 'refund' | 'commission' | 'referral';
+  description: string;
+  reference?: string;
+  relatedId?: string; // escrow ID, request ID, etc.
+  balanceBefore: number;
+  balanceAfter: number;
+  createdAt: Date;
+}
+
+// Trust & Safety
+export interface UserVerification {
+  id: string;
+  userId: string;
+  phoneVerified: boolean;
+  phoneVerifiedAt?: Date;
+  emailVerified: boolean;
+  emailVerifiedAt?: Date;
+  idVerified: boolean;
+  idVerifiedAt?: Date;
+  idType?: 'nin' | 'bvn' | 'drivers_license' | 'passport';
+  idNumber?: string;
+  idDocumentUrl?: string;
+  businessVerified: boolean;
+  businessVerifiedAt?: Date;
+  businessRegNumber?: string;
+  businessDocumentUrl?: string;
+  verificationScore: number; // 0-100
+  updatedAt: Date;
+}
+
+export interface UserReport {
+  id: string;
+  reporterId: string;
+  reporterName: string;
+  reportedUserId: string;
+  reportedUserName: string;
+  reason: 'spam' | 'fraud' | 'inappropriate' | 'harassment' | 'fake_profile' | 'other';
+  description: string;
+  evidence?: string[]; // URLs to screenshots
+  relatedRequestId?: string;
+  status: 'pending' | 'investigating' | 'resolved' | 'dismissed';
+  actionTaken?: string;
+  resolvedAt?: Date;
+  resolvedBy?: string;
+  createdAt: Date;
+}
+
+export interface BlockedUser {
+  id: string;
+  userId: string; // who blocked
+  blockedUserId: string; // who got blocked
+  createdAt: Date;
+}
+
+export interface Dispute {
+  id: string;
+  escrowId: string;
+  requestId: string;
+  requesterId: string;
+  vendorId: string;
+  initiatedBy: string;
+  reason: string;
+  description: string;
+  evidence: DisputeEvidence[];
+  status: 'open' | 'under_review' | 'resolved' | 'escalated';
+  resolution?: string;
+  refundAmount?: number;
+  resolvedAt?: Date;
+  resolvedBy?: string;
+  createdAt: Date;
+}
+
+export interface DisputeEvidence {
+  id: string;
+  submittedBy: string;
+  type: 'text' | 'image' | 'document';
+  content: string;
+  url?: string;
+  createdAt: Date;
+}
+
+// Enhanced Reviews
+export interface EnhancedReview {
+  id: string;
+  reviewerId: string;
+  reviewerName: string;
+  reviewerImage?: string;
+  revieweeId: string;
+  requestId: string;
+  rating: number;
+  comment: string;
+  photos?: string[]; // review photos
+  verifiedPurchase: boolean;
+  helpful: number; // helpful votes
+  notHelpful: number;
+  vendorResponse?: VendorResponse;
+  status: 'published' | 'pending' | 'flagged' | 'removed';
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+export interface VendorResponse {
+  text: string;
+  respondedAt: Date;
+}
+
+export interface ReviewVote {
+  id: string;
+  reviewId: string;
+  userId: string;
+  voteType: 'helpful' | 'not_helpful';
+  createdAt: Date;
+}
+
+// Vendor Portfolio
+export interface PortfolioItem {
+  id: string;
+  vendorId: string;
+  title: string;
+  description: string;
+  category: string;
+  images: string[];
+  completionDate: Date;
+  clientName?: string; // optional
+  price?: number;
+  tags: string[];
+  featured: boolean;
+  createdAt: Date;
+}
+
+// Referral System
+export interface Referral {
+  id: string;
+  referrerId: string;
+  referrerName: string;
+  refereeId?: string; // set when referee signs up
+  refereeName?: string;
+  referralCode: string;
+  status: 'pending' | 'completed' | 'rewarded';
+  rewardAmount: number;
+  rewardCurrency: string;
+  rewardedAt?: Date;
+  createdAt: Date;
+}
+
+export interface PromoCode {
+  id: string;
+  code: string;
+  type: 'percentage' | 'fixed';
+  value: number; // percentage or fixed amount
+  maxDiscount?: number; // max discount for percentage
+  minPurchase?: number;
+  maxUses: number;
+  usedCount: number;
+  userType?: UserType; // who can use it
+  category?: string; // specific category
+  validFrom: Date;
+  validTo: Date;
+  isActive: boolean;
+  createdAt: Date;
+}
+
+export interface PromoCodeUsage {
+  id: string;
+  promoCodeId: string;
+  userId: string;
+  requestId: string;
+  discountAmount: number;
+  usedAt: Date;
+}
+
+// Analytics
+export interface VendorAnalytics {
+  id: string;
+  vendorId: string;
+  period: 'daily' | 'weekly' | 'monthly';
+  date: Date;
+  // Performance
+  quotesViewCount: number;
+  quotesSubmitted: number;
+  quotesAccepted: number;
+  conversionRate: number; // percentage
+  // Financial
+  revenue: number;
+  averageOrderValue: number;
+  totalTransactions: number;
+  // Engagement
+  responseTime: number; // average in minutes
+  responseRate: number; // percentage
+  // Ratings
+  averageRating: number;
+  totalReviews: number;
+  // Popular
+  popularCategories: { category: string; count: number }[];
+  updatedAt: Date;
+}
+
+// Terms & Compliance
+export interface UserConsent {
+  id: string;
+  userId: string;
+  termsVersion: string;
+  privacyVersion: string;
+  agreedToTerms: boolean;
+  agreedToPrivacy: boolean;
+  agreedAt: Date;
+  ipAddress?: string;
+}
+
+// Favorites
+export interface Favorite {
+  id: string;
+  userId: string;
+  vendorId: string;
+  vendorName: string;
+  createdAt: Date;
+}
+
+// Request Templates
+export interface RequestTemplate {
+  id: string;
+  userId: string;
+  name: string;
+  category: string;
+  description: string;
+  budget?: { min?: number; max?: number };
+  usageCount: number;
+  createdAt: Date;
 }

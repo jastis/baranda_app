@@ -47,6 +47,13 @@ import VendorSubscriptionScreen from '../screens/VendorSubscriptionScreen';
 // New Features
 import ProductAlertsScreen from '../screens/ProductAlertsScreen';
 import FeaturedItemsScreen from '../screens/FeaturedItemsScreen';
+import PaymentScreen from '../screens/PaymentScreen';
+import WalletScreen from '../screens/WalletScreen';
+import VerificationScreen from '../screens/VerificationScreen';
+import ReportUserScreen from '../screens/ReportUserScreen';
+import ReferralScreen from '../screens/ReferralScreen';
+import TermsScreen from '../screens/TermsScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -246,6 +253,41 @@ const RequesterStack = () => {
         component={HowItWorksScreen}
         options={{ title: 'How It Works' }}
       />
+      <Stack.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={{ title: 'Payment' }}
+      />
+      <Stack.Screen
+        name="Wallet"
+        component={WalletScreen}
+        options={{ title: 'Wallet' }}
+      />
+      <Stack.Screen
+        name="Verification"
+        component={VerificationScreen}
+        options={{ title: 'Verification' }}
+      />
+      <Stack.Screen
+        name="ReportUser"
+        component={ReportUserScreen}
+        options={{ title: 'Report User' }}
+      />
+      <Stack.Screen
+        name="Referral"
+        component={ReferralScreen}
+        options={{ title: 'Earn Rewards' }}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{ title: 'Terms of Service' }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Privacy Policy' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -309,6 +351,41 @@ const VendorStack = () => {
         component={HowItWorksScreen}
         options={{ title: 'How It Works' }}
       />
+      <Stack.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={{ title: 'Payment' }}
+      />
+      <Stack.Screen
+        name="Wallet"
+        component={WalletScreen}
+        options={{ title: 'Wallet' }}
+      />
+      <Stack.Screen
+        name="Verification"
+        component={VerificationScreen}
+        options={{ title: 'Verification' }}
+      />
+      <Stack.Screen
+        name="ReportUser"
+        component={ReportUserScreen}
+        options={{ title: 'Report User' }}
+      />
+      <Stack.Screen
+        name="Referral"
+        component={ReferralScreen}
+        options={{ title: 'Earn Rewards' }}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{ title: 'Terms of Service' }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Privacy Policy' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -341,6 +418,16 @@ const AdminStack = () => {
         name="HowItWorks"
         component={HowItWorksScreen}
         options={{ title: 'How It Works' }}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{ title: 'Terms of Service' }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Privacy Policy' }}
       />
     </Stack.Navigator>
   );
