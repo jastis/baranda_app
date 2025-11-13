@@ -16,6 +16,7 @@
     "expo": "~54.0.23",
     "expo-ads-admob": "^13.0.0",
     "expo-av": "^16.0.7",
+    "expo-image-picker": "^17.0.8",
     "expo-location": "^19.0.7",
     "expo-notifications": "^0.32.12",
     "expo-status-bar": "~3.0.8",

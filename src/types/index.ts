@@ -1,4 +1,4 @@
-export type UserType = 'requester' | 'vendor';
+export type UserType = 'requester' | 'vendor' | 'admin';
 
 export interface User {
   id: string;
@@ -27,6 +27,12 @@ export interface User {
   // Advertisement settings
   adsDisabled?: boolean; // individual user ad disable
   isPremium?: boolean; // premium users see no ads
+  // Subscription fields (for vendors)
+  subscriptionStatus?: 'active' | 'expired' | 'trial' | 'none';
+  subscriptionPlanId?: string;
+  subscriptionStartDate?: Date;
+  subscriptionEndDate?: Date;
+  subscriptionAutoRenew?: boolean;
 }
 
 export interface VendorCategory {
@@ -212,4 +218,68 @@ export interface FeaturedItem {
   startDate: Date;
   endDate: Date;
   createdAt: Date;
+}
+
+// Subscription System
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  currency: string;
+  duration: number; // in days
+  features: {
+    maxRequests?: number; // max requests per month (undefined = unlimited)
+    maxFeaturedItems?: number;
+    prioritySupport: boolean;
+    verifiedBadge: boolean;
+    analyticsAccess: boolean;
+    customBranding?: boolean;
+  };
+  isActive: boolean;
+  displayOrder: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface SubscriptionSettings {
+  id: string;
+  subscriptionEnabled: boolean; // global toggle for subscription system
+  trialPeriodDays: number; // default trial period
+  allowFreeAccess: boolean; // if true, vendors can use app without subscription
+  gracePeriodDays: number; // days after expiry before restricting access
+  paymentMethods: string[]; // e.g., ['manual', 'stripe', 'paystack']
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface SubscriptionTransaction {
+  id: string;
+  userId: string;
+  planId: string;
+  amount: number;
+  currency: string;
+  paymentMethod: string;
+  status: 'pending' | 'completed' | 'failed' | 'refunded';
+  transactionDate: Date;
+  referenceId?: string;
+  metadata?: any;
+}
+
+// Admin Settings (Master Control)
+export interface AdminSettings {
+  id: string;
+  // Advertisement Controls
+  adsEnabled: boolean;
+  // Subscription Controls
+  subscriptionEnabled: boolean;
+  // App Controls
+  maintenanceMode: boolean;
+  maintenanceMessage?: string;
+  // Feature Flags
+  chatEnabled: boolean;
+  reviewsEnabled: boolean;
+  notificationsEnabled: boolean;
+  updatedAt: Date;
+  updatedBy: string;
 }
