@@ -54,6 +54,10 @@ import ReportUserScreen from '../screens/ReportUserScreen';
 import ReferralScreen from '../screens/ReferralScreen';
 import TermsScreen from '../screens/TermsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
+import EnhancedReviewsScreen from '../screens/EnhancedReviewsScreen';
+import PortfolioScreen from '../screens/PortfolioScreen';
+import VendorAnalyticsScreen from '../screens/VendorAnalyticsScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -288,6 +292,16 @@ const RequesterStack = () => {
         component={PrivacyPolicyScreen}
         options={{ title: 'Privacy Policy' }}
       />
+      <Stack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{ title: 'Favorite Vendors' }}
+      />
+      <Stack.Screen
+        name="Reviews"
+        component={EnhancedReviewsScreen}
+        options={{ title: 'Reviews' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -385,6 +399,21 @@ const VendorStack = () => {
         name="PrivacyPolicy"
         component={PrivacyPolicyScreen}
         options={{ title: 'Privacy Policy' }}
+      />
+      <Stack.Screen
+        name="Portfolio"
+        component={PortfolioScreen}
+        options={{ title: 'Portfolio' }}
+      />
+      <Stack.Screen
+        name="Analytics"
+        component={VendorAnalyticsScreen}
+        options={{ title: 'Analytics' }}
+      />
+      <Stack.Screen
+        name="Reviews"
+        component={EnhancedReviewsScreen}
+        options={{ title: 'Reviews' }}
       />
     </Stack.Navigator>
   );
